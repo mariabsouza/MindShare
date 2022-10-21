@@ -77,5 +77,6 @@ app.use('/', authRoutes)
 app.get('/', ThoughtsController.showThoughts)
 
 conn.sync().then(() => {
-  app.listen(3000)
+  // app.listen(3000)
+  process.env.PORT
 }).catch((err) => console.log(err))
