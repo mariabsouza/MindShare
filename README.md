@@ -1,12 +1,16 @@
-![alt text](public/img/readme/logo.png)
+![Logo](public/img/readme/logo.png)
 
 # Descrição
 
 O MindShare é uma rede social para postar tudo o que vier à sua mente. Desde receitas até relatos do dia, use a sua imaginação!
 
-# Acesso ao projeto
+## Acesso ao projeto
+https://nodejs-mindshare.herokuapp.com/
 
 # Demo
+Clique na imagem abaixo para assistir
+
+[![Demo](public/img/readme/home.jpg)](https://youtu.be/zyfSHR4aI58)
 
 # Funcionalidades
 
