@@ -3,7 +3,13 @@
     <meta charset='UTF-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <title>Document</title>
+    <title>MindShare</title>
+    <link rel='preconnect' href='https://fonts.googleapis.com' />
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+    <link
+      href='https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@200;300;500&display=swap'
+      rel='stylesheet'
+    />
     <link rel='shortcut icon' href='/img/favicon.ico' type='image/x-icon' />
     <link rel='stylesheet' href='/css/style.css' />
     <link
@@ -14,32 +20,33 @@
   <body>
     <nav id='navbar'>
       <a href='/'>
-        <img src='/img/toughts_logo.png' alt='' />
+        <img src='/img/toughts_logo.png' alt='MindShare Logo' />
       </a>
 
       <ul>
         <li><a href='/'>Pensamentos</a></li>
-        {{#if session.userId}}    
-          <li><a href="/thoughts/dashboard">Dashboard</a></li>
-          <li><a href="/logout">Sair</a></li>
+        {{#if session.userId}}
+          <li><a href='/thoughts/dashboard'>Dashboard</a></li>
+          <li><a href='/logout'>Sair</a></li>
         {{else}}
-          <li><a href="/login">Entrar</a></li>
-          <li><a href="/register">Registrar</a></li>
+          <li><a href='/login'>Entrar</a></li>
+          <li><a href='/register'>Registrar</a></li>
         {{/if}}
       </ul>
     </nav>
 
-
-    <div class="container">
+    <div class='container'>
       {{#if messages.message}}
-      <div class="message">
-        {{messages.message}}
-      </div>
+        <div class='message'>
+          {{messages.message}}
+        </div>
       {{/if}}
-    {{{body}}}
+      {{{body}}}
     </div>
-    <footer>
-      <p><span>Thoughts</span>&copy; 2022</p>
-    </footer>
+
+    <script
+      src='https://kit.fontawesome.com/8678d1c3df.js'
+      crossorigin='anonymous'
+    ></script>
   </body>
 </html>

@@ -1,6 +1,7 @@
 const { raw } = require('express')
 const Thought = require('../models/Thought')
 const User = require('../models/User')
+const Comment = require('../models/Comment')
 const { all } = require('../routes/thoughtsRoutes')
 const {Op} = require('sequelize')
 
@@ -20,6 +21,7 @@ module.exports = class ThoughtsController {
     if(req.query.search) {
       search = req.query.search
       thoughtsQty = true
+
     }
 
     //Para definir os pensamentos de mais novos para mais velhos como padrão
@@ -38,15 +40,77 @@ module.exports = class ThoughtsController {
       order: [['createdAt', order]]
     })
 
+    thoughtsQty = allThoughts.length
+    console.log(thoughtsQty)
+    
+
+
     //O map faz pegar apenas os dados, limpa os campos desnecessários
     //O "result.get({plain: true})" faz com que a gente pegue os dados como play e que todos eles sejam jogados no mesmo array
 
+
+
     const thoughts = allThoughts.map((result) => result.get({plain: true}))
 
-    res.render('thoughts/home', {thoughts, search})
+    res.render('thoughts/home', {thoughts, search, thoughtsQty})
 
   }
 
+  static async seeThought(req, res) {
+
+    const thoughtId = req.params.id
+
+    let thought = await Thought.findAll({
+      where: {
+        id: thoughtId
+      },
+      include: User,
+    })
+
+    let comments = await Comment.findAll({
+      where: {
+        ThoughtId: thoughtId
+      },
+      include: User
+    })
+
+
+    // const user = await thought.User.dataValues
+
+    // comment = await comment.Comments[0].dataValues
+
+
+    thought = thought.map((result) => result.get({plain: true}))[0]
+    comments = comments.map((result) => result.get({plain: true}))
+
+    res.render('thoughts/thought', {thought, comments})
+  }
+
+  static async addComment(req,res) {
+
+    const text = req.body.comment
+    const UserId = req.session.userId
+    const ThoughtId = req.body.id
+
+    const comment = {
+      text,
+      UserId,
+      ThoughtId
+    }
+
+    try {
+      await Comment.create(comment)
+  
+      req.flash('message', 'Comentário criado com sucesso')
+  
+      req.session.save(() => {
+        res.redirect(`/thoughts/${ThoughtId}`)
+      })
+        
+      } catch (error) {
+        console.log(error)
+      }
+  }
 
   static async dashboard(req, res) {
 
@@ -64,6 +128,8 @@ module.exports = class ThoughtsController {
     if(!user) {
       res.redirect('/login')
     }
+
+
 
     //Limpar o resultado
     const thoughts = user.Thoughts.map((result) => result.dataValues)
@@ -88,6 +154,7 @@ module.exports = class ThoughtsController {
     
     const thought = {
       title: req.body.title,
+      content: req.body.content.replace(/\r?\n/g, '<br>'),
       UserId: req.session.userId
     }
 
@@ -113,16 +180,20 @@ module.exports = class ThoughtsController {
 
     const thought = await Thought.findOne({where: {id: thoughtId}, raw: true})
 
+    thought.content = thought.content.replace(/<br\s*\/?>/ig, "\r\n")
+
 
     res.render('thoughts/edit', {thought})
   }
+  
 
   static async updateThought (req, res) {
     const id = req.params.id
 
     const title = req.body.title
+    const content = req.body.content.replace(/\r?\n/g, '<br>')
 
-    await Thought.update({title : title}, { where: { id: id } })
+    await Thought.update({title : title, content: content}, { where: { id: id } })
 
     res.redirect('/thoughts/dashboard')
   }

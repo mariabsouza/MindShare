@@ -12,6 +12,8 @@ router.get('/edit/:id', checkAuth, ThoughtsController.editThought)
 router.post('/edit/:id', checkAuth, ThoughtsController.updateThought)
 router.post('/remove', checkAuth, ThoughtsController.removeThought)
 router.get('/dashboard', checkAuth, ThoughtsController.dashboard)
+router.get('/:id', ThoughtsController.seeThought)
+router.post('/comment', checkAuth, ThoughtsController.addComment)
 router.get('/', ThoughtsController.showThoughts)
 
 module.exports = router

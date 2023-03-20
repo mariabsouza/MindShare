@@ -1,0 +1,42 @@
+<div class="title-container-thoughts">
+
+<h2>{{thought.title}}</h2>
+<p id="username">Por: <span>{{thought.User.name}}</span></p>
+</div>
+<p>{{{thought.content}}}</p>
+
+
+<section id="comments">
+
+<h3>Comentários</h>
+
+<h4>Adicione um comentário:</h4>
+  {{#if session.userId}}    
+    <form action="/thoughts/comment" method="POST">
+      <input type="hidden" value="{{thought.id}}" name="id">
+      <input type="text" name="comment" id="comment" placeholder="Escreva seu comentário" required>
+      <input type="submit" value="Comentar">
+    </form>
+  {{else}}
+    <input type="text" name="comment" id="comment" placeholder="Você precisa estar logado para adicionar um comentário!" disabled>
+  {{/if}}
+
+
+
+
+{{!-- {{#each comments}}
+  <p>{{this.text}}</p>
+  <p>Por: {{this.User.name}}</p>
+{{/each}} --}}
+
+<div class="comments-container">
+    {{#each comments}}
+        <figure>
+            <blockquote>
+                {{this.text}}
+            </blockquote>
+            <figcaption>Por: <span>{{this.User.name}}</span></figcaption>
+        </figure>
+    {{/each}}
+</div>
+</section>

@@ -1,10 +1,12 @@
 <div class="tought-form-container">
-  <a href="/toughts/dashboard">Voltar</a>
+  <a href="/thoughts/dashboard">Voltar</a>
     <h1>Criando um Pensamento:</h1>
     <form action="/thoughts/add" method="POST">
         <div class="form-control">
             <label for="title">Título:</label>
             <input type="text" name="title" placeholder="Digite o título">
+            <label for="content">Conteúdo:</label>
+            <textarea name="content" placeholder="Digite o conteúdo" rows="10"></textarea>
         </div>
         <input type="submit" value="Criar Pensamento">
     </form>

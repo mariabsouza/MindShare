@@ -9,7 +9,13 @@ const Thought = db.define('Thought', {
     type: DataTypes.STRING,
     allowNull: false,
     required: true
-  }
+  },
+  content: {
+    type: DataTypes.TEXT('long'),
+    allowNull: false,
+    required: true
+  },
+
 })
 
 Thought.belongsTo(User)

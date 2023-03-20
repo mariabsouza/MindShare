@@ -1,40 +1,55 @@
-<div class="home-header">
-    {{#if search}}
+<div class='home-header'>
+  {{#if search}}
     <h1>Você está buscando por: <span>{{search}}</span></h1>
-        {{#if thoughtsQty }}
-            <p>Foram encontrados <span>{{thoughtsQty}}</span> pensamento(s)</p>
-        {{else}}
-            <p>Nenhum pensamento encontrado para o termo <span>{{search}}</span></p>
-        {{/if}}
+    {{#if thoughtsQty}}
+      <p>Foram encontrados <span>{{thoughtsQty}}</span> pensamento(s)</p>
     {{else}}
-    <h1>Conheça alguns dos nossos <span>Pensamentos</span>:</h1>
+      <p>Nenhum pensamento encontrado para o termo <span>{{search}}</span></p>
     {{/if}}
-    <form action="/" method="GET">
-        <input type="text" name="search" placeholder="Está buscando por algo?">
-        <input type="submit" class="btn" value="Buscar">
+  {{else}}
+    <h1>Veja o que estão <span>Pensando</span>:</h1>
+  {{/if}}
+  <form action='/' method='GET'>
+  <div id="searchBar">
+    <input type='text' name='search' placeholder='Está buscando por algo?' id="search"/>
+    <button>
+
+    <input type='submit' class='btn' value='Buscar' id="search-btn"/>
+    <i class="bi bi-search" id="search-icon"></i>
+    </button>
+  </div>
+  </form>
+  <div class='order-container'>
+    <span>Ordenar por:</span>
+    <form action='/' method='GET'>
+      <input type='hidden' name='search' value='{{this.search}}' />
+      <input type='hidden' name='order' value='new' />
+      <button type='submit'><i class='bi bi-arrow-up'></i> Mais novos</button>
     </form>
-    <div class="order-container">
-        <span>Ordenar por:</span>  
-        <form action="/" method="GET">
-            <input type="hidden" name="search" value="{{this.search}}">
-            <input type="hidden" name="order" value="new">
-            <button type="submit"><i class="bi bi-arrow-up"></i> Mais novos</button>
-        </form>
-        <form action="/" method="GET">
-            <input type="hidden" name="search" value="{{this.search}}">
-            <input type="hidden" name="order" value="old">
-            <button type="submit"><i class="bi bi-arrow-down"></i> Mais antigos</button>
-        </form>
-        <a href="/">Limpar</a>
-    </div>
+    <form action='/' method='GET'>
+      <input type='hidden' name='search' value='{{this.search}}' />
+      <input type='hidden' name='order' value='old' />
+      <button type='submit'><i class='bi bi-arrow-down'></i>
+        Mais antigos</button>
+    </form>
+    <a href='/'>Limpar</a>
+  </div>
 </div>
-<div class="toughts-container">
-    {{#each thoughts}}
-        <figure>
-            <blockquote>
-                "{{this.title}}"
-            </blockquote>
-            <figcaption>por <span>{{this.User.name}}</span></figcaption>
-        </figure>
-    {{/each}}
+<div class='toughts-container'>
+  {{#each thoughts}}
+    <figure>
+      
+      <div>
+        <h2>{{this.title}}</h2>
+        <p><span>{{this.User.name}}</span></p>
+      </div>
+      
+      <p>{{{this.content}}}</p>
+      <a href='/thoughts/{{this.id}}' class='btn'>Ver este pensamento</a>     
+    </figure>
+  {{/each}}
 </div>
+
+    <footer>
+      <p><span>Thoughts</span>&copy; 2022</p>
+    </footer>
